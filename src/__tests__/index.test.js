@@ -66,6 +66,12 @@ describe("Testing the environment", () => {
     expect(response.status).toBe(204)
   })
 
+  it("should test that when modifying a product with non valid data we receive 404", async () => {
+    const response = await client.get("/products/" + "999999999999999999999999")
+    expect(response.status).toBe(404)
+    expect(response.body._id).toBe(undefined)
+  })
+
   it("should test that we actually delete the product when passing a valid product ID", async () => {
     const response = await client.delete("/products/" + productId)
     expect(response.status).toBe(204)
@@ -76,12 +82,6 @@ describe("Testing the environment", () => {
       "/products/" + "999999999999999999999999"
     )
     expect(response.status).toBe(404)
-  })
-
-  it("should test that when modifying a product with non valid data we receive 404", async () => {
-    const response = await client.get("/products/" + "999999999999999999999999")
-    expect(response.status).toBe(404)
-    expect(response.body._id).toBe(undefined)
   })
 
   afterAll(async () => {
