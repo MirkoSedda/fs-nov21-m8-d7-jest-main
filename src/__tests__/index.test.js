@@ -78,26 +78,14 @@ describe("Testing the environment", () => {
     expect(response.status).toBe(404)
   })
 
-  // it("should test that when modifying a product with non valid data we receive 404", async () => {
-  //   const response = await client.get("/products/" + "999999999999999999999999")
-  //   expect(response.status).toBe(404)
-  //   expect(response.body._id).toBe(undefined)
-  // })
+  it("should test that when modifying a product with non valid data we receive 404", async () => {
+    const response = await client.get("/products/" + "999999999999999999999999")
+    expect(response.status).toBe(404)
+    expect(response.body._id).toBe(undefined)
+  })
 
   afterAll(async () => {
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
   })
 })
-
-// When retrieving the /products/:id endpoint:
-// done -> expect requests to be 404 with a non-existing id, like 999999999999999999999999
-// done -> expect requests to return the correct product with a valid id
-// When deleting the /products/:id endpoint:
-// done -> expect successful 204 response code
-// done -> expect 404 with a non-existing id
-// When updating a /product/:id endpoint with new data:
-// done -> expect requests to be accepted.
-// expect 404 with a non-existing id
-// Expect the response.body.name to be changed
-// Expect the typeof name in response.body to be “string”
